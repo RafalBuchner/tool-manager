@@ -1,0 +1,10 @@
+extensionName: ToolManager
+repository: http://github.com/RafalBuchner/tool-manager
+extensionPath: build/ToolManager.roboFontExt
+description: It is UI hack, that helps you manage or get rid of default toolbar.
+developer: Rafał Buchner
+developerURL: https://rafalbuchner.com
+tags: [ toolbar ]
+infoPath: http://github.com/RafalBuchner/tool-manager/blob/master/build/ToolManager.roboFontExt/info.plist
+zipPath: http://github.com/RafalBuchner/tool-manager/archive/master.zip
+icon: https://github.com/RafalBuchner/tool-manager/raw/master/ToolManagerMechanicIcon.png
