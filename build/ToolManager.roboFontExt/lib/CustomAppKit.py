@@ -1,17 +1,25 @@
-from AppKit import NSTextFieldCell, NSFont, NSRegularControlSize, NSSmallControlSize, NSMiniControlSize
+from AppKit import (
+    NSTextFieldCell,
+    NSFont,
+    NSRegularControlSize,
+    NSSmallControlSize,
+    NSMiniControlSize,
+)
 import objc
 
 _sizeStyleMap = {
     "regular": NSRegularControlSize,
     "small": NSSmallControlSize,
-    "mini": NSMiniControlSize
+    "mini": NSMiniControlSize,
 }
 
+
 def _setSizeStyle(obj, value):
-        value = _sizeStyleMap[value]
-        obj.setControlSize_(value)
-        font = NSFont.systemFontOfSize_(NSFont.systemFontSizeForControlSize_(value))
-        obj.setFont_(font)
+    value = _sizeStyleMap[value]
+    obj.setControlSize_(value)
+    font = NSFont.systemFontOfSize_(NSFont.systemFontSizeForControlSize_(value))
+    obj.setFont_(font)
+
 
 class _VerticallyCenteredTextFieldCell(NSTextFieldCell):
     mIsEditingOrSelecting = False
@@ -28,7 +36,7 @@ class _VerticallyCenteredTextFieldCell(NSTextFieldCell):
 
     def drawingRectForBounds_(self, theRect):
         # Get the parent's idea of where we should draw
-        newRect = super().drawingRectForBounds_(theRect)
+        newRect = objc.super(NSTextFieldCell, self).drawingRectForBounds_(theRect)
 
         # When the text field is being
         # edited or selected, we have to turn off the magic because it screws up
@@ -43,13 +51,16 @@ class _VerticallyCenteredTextFieldCell(NSTextFieldCell):
             heightDelta = newRect.size.height - textSize.height
             if heightDelta > 0:
                 newRect.size.height -= heightDelta
-                newRect.origin.y += heightDelta/2
+                newRect.origin.y += heightDelta / 2
 
         return newRect
 
-def VerticallyCenteredTextFieldCell(sizeStyle='regular',singleLine=True,editable=False):
+
+def VerticallyCenteredTextFieldCell(
+    sizeStyle="regular", singleLine=True, editable=False
+):
     cell = _VerticallyCenteredTextFieldCell.alloc().init()
     cell.setUsesSingleLineMode_(singleLine)
     cell.setEditable_(editable)
-    _setSizeStyle(cell,sizeStyle)
+    _setSizeStyle(cell, sizeStyle)
     return cell
